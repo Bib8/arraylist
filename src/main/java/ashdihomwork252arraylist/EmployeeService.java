@@ -31,9 +31,15 @@ public class EmployeeService implements EmployeeServiceInterface{
         return String.join(" ", "Founded - " + id);
     }
 
-    public String printRepository() {
-         return String.join(" ", String.valueOf(employees)) ;
+    public List<String> printRepository() {
+         List<String> listOfEmployees = new ArrayList<>();
+        for (int i = 0; i < employees.size(); i++) {
+            Employee employee = employees.get(i);
+            String result = String.join(" ", employee.getFirstName(), employee.getLastName());
+            listOfEmployees.add(result);
+        }
+            return listOfEmployees;
     }
 
-
+//String result = String.join(" ", listOfEmployees.add(employee.getFirstName())  + listOfEmployees.add(employee.getLastName()));
 }

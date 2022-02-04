@@ -3,6 +3,8 @@ package ashdihomwork252arraylist;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -30,7 +32,7 @@ public class EmployeeController {
     @GetMapping(path = "/get/rep")
     @RequestMapping(value = "/get/rep" , method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String printService() {
+    public List<String> printService() {
         return employeeService.printRepository();
     }
 }
