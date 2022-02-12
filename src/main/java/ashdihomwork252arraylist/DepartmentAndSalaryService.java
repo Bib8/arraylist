@@ -3,12 +3,13 @@ package ashdihomwork252arraylist;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmentAndSalaryService implements DeparmentAndSalaryInterface {
 
     private final EmployeeServiceMap employeeServiceMap;
-    private Object NotFoundAnyMatchException;
+
 
     public DepartmentAndSalaryService(EmployeeServiceMap employeeServiceMap) {
         this.employeeServiceMap = employeeServiceMap;
@@ -18,7 +19,7 @@ public class DepartmentAndSalaryService implements DeparmentAndSalaryInterface {
     public Employee maxSalaryInDeparmentId(int deparmentId) throws NotFoundAnyMatchException {
         return employeeServiceMap.getAllEmployees().stream().
                 filter(e-> e.getDepartmentId() == deparmentId).
-                max(Comparator.comparingInt(e-> e.getSalary())).
+                max(Comparator.comparingInt(Employee::getSalary)).
                 orElseThrow(NotFoundAnyMatchException::new);
     }
 
@@ -26,17 +27,20 @@ public class DepartmentAndSalaryService implements DeparmentAndSalaryInterface {
     public Employee minSalaryInDeparmentId(int deparmentId) throws NotFoundAnyMatchException {
         return employeeServiceMap.getAllEmployees().stream().
                 filter(e-> e.getDepartmentId() == deparmentId).
-                min(Comparator.comparingInt(e-> e.getSalary())).
+                min(Comparator.comparingInt(Employee::getSalary)).
                 orElseThrow(NotFoundAnyMatchException::new);
     }
 
     @Override
     public Collection<Employee> findEmployeeInDeparmentId(int deparmentId) {
-        return null;
+        return employeeServiceMap.getAllEmployees().stream().
+                filter(e-> e.getDepartmentId() == deparmentId).
+                collect(Collectors.toList());
     }
 
     @Override
     public Map<Integer, List<Employee>> allEmployeeInDeparmentId() {
-        return null;
+        return employeeServiceMap.getAllEmployees().stream().
+                collect(Collectors.groupingBy(Employee::getDepartmentId));
     }
 }
